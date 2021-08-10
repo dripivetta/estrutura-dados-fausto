@@ -98,8 +98,8 @@ console.log (estadosNe)
     2) Escreva uma arrow function que receba dois parâmetros, área e população, e calcule a densidade demográfica
         retornando o resultado da divisão da segunda pela primeira.
 */
-let densidade
-let arrow = (area, populacao) => densidade = populacao / area
+
+let densidade = (area, populacao) => populacao / area
 
 /* 
     3) Percorra o vetor estadosNe usando um for tradicional. Para cada estado, chame uma arrow function criada
@@ -108,18 +108,18 @@ let arrow = (area, populacao) => densidade = populacao / area
         Durante este mesmo loop, elimine a propriedade 'sigla' dos objetos.
 */
 for (let i = 0; i < estadosNe.length; i++){
-    console.log (arrow (densidade))
-    console.log (estadosNe.densidade) 
-    delete estadosNe.sigla
+    estadosNe[i]['Densidade demográfica'] = densidade (estadosNe[i].area, estadosNe[i].populacao)
+    delete estadosNe[i].sigla
 }
 
 /* 
     4) Escreva uma arrow function que receba um objeto. Na função, use for..in para extrair as propriedades
         e seus valores e exibi-los com console.log ().
 */
-let arrow2 = () => {
-    For (propriedades in estadosNe) 
-    console.log (propriedades + ' -> ' + estado[propriedades])
+let arrow2 = (objeto) => {
+    for (propriedades in objeto) { 
+    console.log (propriedades + ' -> ' + objeto[propriedades])
+    }
 }
 
 /* 
@@ -127,7 +127,7 @@ let arrow2 = () => {
         em 4) para exibi-lo.
 */
 for (let i of estadosNe){
-    console.log (arrow2)
+    arrow2(i)
 }
 
 /*
@@ -143,12 +143,12 @@ let vazio = []
     para manter a ordem alfabética o terceiro estado (Rio Grande do Norte) deve ser inserido entre os dois
     já existentes, e assim por diantes.
 */
-vazio.push ('Sergipe')
-vazio.unshift ('Alagoas')
-vazio.splice (1, 0, 'Bahia')
-vazio.splice (2, 0, 'Ceará')
-vazio.splice (3, 0, 'Maranhão')
-vazio.splice (4, 0, 'Paraíba')
-vazio.splice (5, 0, 'Pernambuco')
-vazio.splice (6, 0, 'Piauí')
-vazio.splice (7, 0, 'Rio Grande do Norte')
+vazio.push (estadosNe[0].nome)
+vazio.unshift (estadosNe[1].nome)
+vazio.splice (1, 0, estadosNe[2].nome)
+vazio.splice (2, 0, estadosNe[3].nome)
+vazio.splice (3, 0, estadosNe[4].nome)
+vazio.splice (4, 0, estadosNe[5].nome)
+vazio.splice (5, 0, estadosNe[6].nome)
+vazio.splice (6, 0, estadosNe[7].nome)
+vazio.splice (7, 0, estadosNe[8].nome)

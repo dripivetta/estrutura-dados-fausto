@@ -14,7 +14,7 @@ function buscaSequencial (vetor, valorBusca, funComparacao){
 //  ela pode ser uma arrow function
 const compararNome = (objNome, valorBusca) => objNome.first_name === valorBusca
 
-import {objNomes} from '.includes/vetor-obj-nomes.mjs'
+import {objNomes} from '.includes/vetor-obj-nomes.mjs' // NÃO TENHO ESTE ARQUIVO
 
 console.log(buscaSequencial(objNome, 'FAUSTO', comparaNome))
 // Mas pode ser feiro a arrow funcion juntdo da chamada

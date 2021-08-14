@@ -36,6 +36,7 @@ console.log ('ANTES:', candidatos)
 console.time ('Ordenando candidatos...')
 // Ordenando pelo nome de uma urna (NM_URNA_CANDIDATO)
 selectionSort (candidatos, (obj1, obj2) => obj1.NM_URNA_CANDIDATO > obj2.NM_URNA_CANDIDATO)
+let memoria = process.memoryUsage().heapUsed / 1024 / 1024
 console.timeEnd ('Ordenando candidatos...')
 console.log ('DEPOIS:', candidatos)
-console.log ({trocas, passada, comparacoes})
+console.log ({trocas, passada, comparacoes, memoria})

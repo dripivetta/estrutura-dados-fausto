@@ -53,5 +53,6 @@ import {nomes} from './includes/100-mil-nomes.mjs'
 console.time ('Ordenando nomes...')
 selectionSort(nomes)
 console.timeEnd ('Ordenando nomes...')
+let memoria = process.memoryUsage().heapUsed / 1024 / 1024
 console.log ('DEPOIS:', nomes)
-console.log({trocas, passada, comparacoes})
+console.log({trocas, passada, comparacoes, memoria})

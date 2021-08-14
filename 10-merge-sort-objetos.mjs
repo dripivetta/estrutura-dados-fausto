@@ -1,20 +1,14 @@
-/*
-    MERGE SORT
-
-    No processo de ordenação, esse algoritimo "desmonta" o vetor original contendo N elementos
-    até obter N vetores de apenas um elemento cada um.
-    Em seguida, usando técnicas de mesclagem(merge), "remonta" o vetor, dessa vez com os elementos já em ordem.
-*/
 let comparacoes
 let divisoes
 let juncoes
 
-function mergeSort (vetor) {
+function mergeSort (vetor, fnComp) {
 // Não posso zerar as variáveis compracoes divisoes e juncoes, pois é uma função recursiva, ela volta e zera de novo
     function mesclar (vetorEsquerdo, vetorDireita){
         let pEsquerda = 0, pDireita = 0, vetResultado = []
         while (pEsquerda < vetorEsquerdo.length && pDireita < vetorDireita.length){
-            if (vetorEsquerdo [pEsquerda] < vetorDireita [pDireita]){
+            // if (vetorEsquerdo [pEsquerda] < vetorDireita [pDireita]){
+                if (fnComp(vetorDireita[pDireita], vetorEsquerdo[pEsquerda])){ // Parâmetros invertidos
                 vetResultado.push (vetorEsquerdo[pEsquerda])
                 pEsquerda ++
             }
@@ -51,8 +45,8 @@ function mergeSort (vetor) {
         console.log({vetorEsquerdo, vetorDireita})
 
         // Chamada recursiva à função (chamar a função dentro da função)
-        vetorEsquerdo = mergeSort (vetorEsquerdo)
-        vetorDireita = mergeSort (vetorDireita)
+        vetorEsquerdo = mergeSort (vetorEsquerdo, fnComp)
+        vetorDireita = mergeSort (vetorDireita, fnComp)
 
         const vetFinal = mesclar (vetorEsquerdo, vetorDireita)
         juncoes++
@@ -63,35 +57,22 @@ function mergeSort (vetor) {
     return vetor // Vetor de 1 elemento, não modificado
 }
 
-// variáveis zeradas no final
+import {candidatos} from './includes/candidatos-2018.mjs'
 comparacoes = 0, divisoes = 0, juncoes = 0
-let nums = [7, 4, 9, 0, 6, 1, 8, 2, 5, 3]
-let numsOrd  =  mergeSort (nums)
-console.log ({numsOrd})
-console.log ({comparacoes, divisoes, juncoes})
-
-// Vetor invertido
-comparacoes = 0, divisoes = 0, juncoes = 0
-let nums2 = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-let nums2Ord = mergeSort (nums2)
-console.log ({nums2Ord})
-console.log ({comparacoes, divisoes, juncoes})
-
-// Vetor já ordenado 
-comparacoes = 0, divisoes = 0, juncoes = 0
-let nums3 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-let nums3Ord = mergeSort (nums3)
-console.log ({nums3Ord})
-console.log ({comparacoes, divisoes, juncoes})
-
-import {nomes} from './includes/100-mil-nomes.mjs'
-comparacoes =0, divisoes = 0, juncoes =0
-console.time ('Ordenando nomes...')
-const nomesOrd = mergeSort(nomes)
-console.timeEnd ('Ordenando nomes...')
+console.log ('ANTES:', candidatos)
+console.time ('Ordenando candidatos...')
+// Ordenando pelo nome de uma urna (NM_URNA_CANDIDATO)
+// const candidatosOrd = mergeSort (candidatos, (obj1, obj2) => obj1.NM_URNA_CANDIDATO > obj2.NM_URNA_CANDIDATO)
+// Ordenação por dois níveis: primeiro por UE (SG_UF) e, dentro da UF, pelo nº do candidato (NR_CANDIDATO)
+let candidatosOrd = mergeSort (candidatos, (obj1, obj2) =>{
+    if (obj1.SE_UE === obj2.SG_UE) { // EMPATE DA UE
+        // Desempate pelo NM_CANDIDATO
+        return obj1.NR_CANDIDATO > obj2.NR_CANDIDATO
+    }
+    else return obj1.SR_UE > obj2.SR_UE // A diferenciação se dá por UF
+})
 let memoria = process.memoryUsage().heapUsed / 1024 / 1024
-// volta em Bytes
-// divide 1024 para darar o resultado em kilobytes
-// divide de novo por 1024 para dar o resultado em Megabytes
-console.log ('DEPOIS:', nomesOrd)
-console.log({comparacoes, divisoes, juncoes, memoria})
+console.timeEnd ('Ordenando candidatos...')
+// console.log ('DEPOIS:', candidatosOrd)
+candidatosOrd.map (obj => console.log (obj))
+console.log ({comparacoes, divisoes, juncoes, memoria})
